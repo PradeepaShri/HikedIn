@@ -1,0 +1,22 @@
+@import java.util
+
+@(products: util.List[Product])
+@main("Products catalogue") {
+  <h2>All products</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Product ID</th>
+        <th>Product Name</th>
+      </tr>
+    </thead>
+    <tbody>
+  @for(product <- products) {
+    <tr>
+      <td> <em>@product.productId </em></td>
+      <td> <em>@product.productName </em></td>
+    </tr>
+  }
+    </tbody>
+  </table>
+}

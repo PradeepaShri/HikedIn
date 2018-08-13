@@ -1,0 +1,38 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# An example controller showing a sample home page
+GET     /                           controllers.HomeController.index
+# An example controller showing how to use dependency injection
+GET     /count                      controllers.CountController.count
+# An example controller showing how to write asynchronous code
+GET     /message                    controllers.AsyncController.message
+#An example of my first custom controller
+GET     /hello                       controllers.HomeController.sayHelloToKatie(name:String)
+
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+
+
+# products urls
+GET     /products                       controllers.ProductsController.getProducts()
+GET     /products/add       controllers.ProductsController.addNewProduct(productId:String)
+GET     /products/update/:productId        controllers.ProductsController.updateProduct(productId:String)
+GET     /products/delete/:productId        controllers.ProductsController.deleteProduct(productId:String)
+
+
+# hike urls
+#GET     /hikes                       controllers.ProductsController.getProducts()
+GET     /hikes/add       controllers.HikeController.addNewHike(hike_id:Integer, hike_name:String, hike_distance:Double)
+GET     /hikes/:hikeId       controllers.HikeController.getHikeNameByHikeId(hikeId:Integer)
+GET     /hikes/delete/:hikeId        controllers.HikeController.deleteHikeByHikeId(hikeId:Integer)
+GET     /hikes/update/:hikeId       controllers.HikeController.updateHikeNameByHikeId(hikeId:Integer, hike_name:String)
+GET     /hikes       controllers.HikeController.getAllHikes()
+
+#GET     /products/update/:productId        controllers.ProductsController.updateProduct(productId:String)
+#GET     /products/delete/:productId        controllers.ProductsController.deleteProduct(productId:String)
+
+
