@@ -1,49 +1,44 @@
-This is your new Play application
-=================================
+# HikedIn
+----------
 
-This file will be packaged with your application when using `activator dist`.
+This simple java play application lets you add and update hikes along with reviews.
 
-There are several demonstration files available in this template.
+#### To run the application
 
-Controllers
-===========
+1.  Start a local mysql database and update the configuration file located in `conf/application.conf` with the `url, username and password`
+2.  In your terminal, cd into the root dir of the project and run the command `sbt run`. This should open up a browser with the default url `localhost:9000`
+3.  You can use the routes specified in the `conf/routes` files. Listed below are the Urls.
+    ```
+    #Hike urls
+    GET     /hikes
+    GET     /hikes/:hikeId
+    POST    /hikes
+    PUT     /hikes
+    DELETE  /hikes/:hikeId
 
-- HomeController.java:
+    # Review urls
+    GET     /reviews
+    GET     /reviews/:hikeId
+    POST    /reviews
+    PUT     /reviews/:reviewId
+    DELETE  /reviews/:review
+    ```
 
-  Shows how to handle simple HTTP requests.
 
-- AsyncController.java:
+#### Controllers
 
-  Shows how to do asynchronous programming when handling a request.
+- HikeController.java:
 
-- CountController.java:
+  An async controller for performing CRUD operations for Hikes.
 
-  Shows how to inject a component into a controller and use the component when
-  handling requests.
+- ReviewController.java:
 
-Components
-==========
+  An async controller for performing CRUD operations for Reviews.
 
-- Module.java:
+#### Future work
 
-  Shows how to use Guice to bind all the components needed by your application.
+- [ ] Add unit/integration tests for all controllers
+- [ ] Add user profiles and relationships
+- [ ] Host the application on a AWS server
+- [ ] Create native android application support
 
-- Counter.java:
-
-  An example of a component that contains state, in this case a simple counter.
-
-- ApplicationTimer.java:
-
-  An example of a component that starts when the application starts and stops
-  when the application stops.
-
-Filters
-=======
-
-- Filters.java:
-
-  Creates the list of HTTP filters used by your application.
-
-- ExampleFilter.java
-
-  A simple filter that adds a header to every response.

@@ -3,21 +3,21 @@
 # ~~~~
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET     /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)
 
 # hike urls
-GET     /hikes       controllers.HikeController.getListOfAllHikes()
+GET     /hikes               controllers.HikeController.getListOfAllHikes()
 GET     /hikes/:hikeId       controllers.HikeController.getHike(hikeId:models.Hike)
-POST    /hikes      controllers.HikeController.addHike()
-PUT     /hikes       controllers.HikeController.updateHike()
+POST    /hikes               controllers.HikeController.addHike()
+PUT     /hikes               controllers.HikeController.updateHike()
 DELETE  /hikes/:hikeId       controllers.HikeController.deleteHike(hikeId:models.Hike)
 
 # review urls
-GET     /reviews    controllers.ReviewController.getListOfAllReviews()
-GET     /reviews/:hikeId    controllers.ReviewController.getListOfAllReviewsForHike(hikeId:models.Hike)
-POST    /reviews     controllers.ReviewController.addReview()
-PUT  /reviews/:reviewId       controllers.ReviewController.updateReview(reviewId:models.Review)
-DELETE  /reviews/:reviewId       controllers.ReviewController.deleteReview(reviewId:models.Review)
+GET     /reviews             controllers.ReviewController.getListOfAllReviews()
+GET     /reviews/:hikeId     controllers.ReviewController.getListOfAllReviewsForHike(hikeId:models.Hike)
+POST    /reviews             controllers.ReviewController.addReview()
+PUT  /reviews/:reviewId      controllers.ReviewController.updateReview(reviewId:models.Review)
+DELETE  /reviews/:review     controllers.ReviewController.deleteReview(reviewId:models.Review)
 
 
 
