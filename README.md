@@ -1,6 +1,6 @@
 # HikedIn
 
-This simple java play application to support CRUD operations on Hikes and its coreresponding reviews.
+This is a simple java play application to support CRUD operations on Hikes and its corresponding Reviews.
 
 #### To run the application
 
