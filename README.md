@@ -1,5 +1,4 @@
 # HikedIn
-----------
 
 This simple java play application lets you add and update hikes along with reviews.
 
