@@ -1,52 +1,59 @@
 package controllers;
 
-import java.util.List;
+import com.google.inject.Inject;
+import java.util.concurrent.CompletableFuture;
 import models.Hike;
+import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.*;
-import views.html.*;
+import play.libs.Json;
+import dao.HikeDAO;
+import java.util.List;
 
 public class HikeController extends Controller {
   
-  public Result addNewHike(Integer hike_id, String hike_name, Double hike_distance) {
-    Boolean result = Hike.addHike(hike_id, hike_name, hike_distance);
-    return ok("Hike Added..." + hike_name);
+  @Inject HikeDAO hikeDAO;
+  private HttpExecutionContext httpExecutionContext;
+  
+  @Inject
+  public HikeController(HttpExecutionContext ec) {
+    this.httpExecutionContext = ec;
   }
   
-  public Result getAllHikes() {
-    List<Hike> listOfAllHikes = Hike.getAllHikes();
-    String listOfAllHikesAsString = " ";
-    for (Hike hike : listOfAllHikes) {
-      listOfAllHikesAsString = listOfAllHikesAsString.concat(hike.hike_name + '\n');
-    }
-    return ok("List of all hikes:\n" + listOfAllHikesAsString);
+  public CompletableFuture<Result> getListOfAllHikes() {
+    return CompletableFuture
+      .supplyAsync(() -> hikeDAO.getListOfAllHikes())
+      .thenApply((List<Hike> listOfAllHikes) -> ok(Json.toJson(listOfAllHikes)))
+      .exceptionally(ex -> notFound());
   }
   
-  public Result getHikeNameByHikeId(Integer hike_id) {
-    Hike hike = Hike.getHikeNameByHikeId(hike_id);
-    return ok("Hike Name corresponding to Hike Id: " + hike_id.toString() + " is: " + hike.hike_name);
+  public CompletableFuture<Result> getHike(Hike hike) {
+    return CompletableFuture
+      .supplyAsync(() -> hikeDAO.getHike(hike))
+      .thenApply((Hike retrievedHike) -> ok(Json.toJson(retrievedHike)))
+      .exceptionally(ex -> notFound());
   }
   
-  public Result deleteHikeByHikeId(Integer hike_id) {
-    Boolean deleteHike = Hike.deleteHikeByHikeId(hike_id);
-    if (deleteHike) {
-      return ok("Hike corresponding to Hike Id: " + hike_id.toString() + " is deleted successfully");
-    } else {
-      return ok("Problem in deleting Hike corresponding to Hike Id: " + hike_id.toString());
-    }
+  public CompletableFuture<Result> addHike() {
+    return CompletableFuture
+      .supplyAsync(() -> Json.fromJson(request().body().asJson(), Hike.class), httpExecutionContext.current())
+      .thenApply((Hike hike) -> hikeDAO.addHike(hike))
+      .thenApply((Hike addedHike) -> ok(Json.toJson(addedHike)))
+      .exceptionally(ex -> forbidden("Given hike already exists"));
   }
   
-  public Result updateHikeNameByHikeId(Integer hike_id, String hike_name) {
-    Boolean updateHike = Hike.updateHikeByHikeId(hike_id, hike_name);
-    return ok("Hike name corresponding to Hike Id: "
-      + hike_id.toString()
-      + " is updated successfully to"
-      + hike_name);
+  public CompletableFuture<Result> updateHike() {
+    return CompletableFuture
+      .supplyAsync(() -> Json.fromJson(request().body().asJson(), Hike.class), httpExecutionContext.current())
+      .thenApply((Hike hike) -> hikeDAO.updateHike(hike))
+      .thenApply((Hike updatedHike) -> ok(Json.toJson(updatedHike)))
+      .exceptionally(ex -> notFound());
+  }
+  
+  public CompletableFuture<Result> deleteHike(Hike hike) {
+    return CompletableFuture
+      .supplyAsync(() -> hikeDAO.deleteHike(hike))
+      .thenApply((deleteHikeResult) -> ok("Hike deleted Successfully.."))
+      .exceptionally(ex -> notFound());
   }
 }
-  
-  
-  //
-  //public Result updateProduct(String productId){
-  //  return ok("update product" + productId);
-  //}
 
