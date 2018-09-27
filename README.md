@@ -1,6 +1,6 @@
 # HikedIn
 
-This simple java play application lets you add and update hikes along with reviews.
+This simple java play application to support CRUD operations on Hikes and its coreresponding reviews.
 
 #### To run the application
 
